@@ -18,7 +18,10 @@ def start():
                <p><a href="/count">Счетчик и данные</a></p>
                <p><a href="/created">Создание</a></p>
            <body>
-        <html>"""
+        <html>""", 200, {
+            'X-server': 'sample',
+            'Content-Type' : 'text/plain; charset=utf-8'
+        }
 
 
 @app.route("/author")
