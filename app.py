@@ -12,6 +12,7 @@ def start():
                <p><a href="/author">Автор</a></p>
                <p><a href="/image">Слон</a></p>
                <p><a href="/count">Счетчик и данные</a></p>
+               <p><a href="/created">Создание</a></p>
            <body>
         <html>"""
 
@@ -69,3 +70,16 @@ def counter():
 @app.route("/info")
 def info():
     return redirect("/author")
+
+
+@app.route("/created")
+def created():
+    return '''
+<!doctype html>
+<html>
+    <body>
+        <h1>Создано успешно</h1>
+        <div><i>Что - то создано...</i></div>
+    </body>
+</html>
+''', 201
