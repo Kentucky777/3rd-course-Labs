@@ -1,4 +1,5 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, request
+import datetime
 app = Flask(__name__)
 
 @app.route("/")
@@ -10,8 +11,11 @@ def start():
                <h1> web-сервер на Flask</h1>
                <p><a href="/author">Автор</a></p>
                <p><a href="/image">Слон</a></p>
+               <p><a href="/count">Счетчик и данные</a></p>
            <body>
         <html>"""
+
+
 @app.route("/author")
 def author():
     name = "Байков Никита Дмитриевич"
@@ -27,6 +31,8 @@ def author():
             <p><a href="/web">web</a></p>
             </body>
         </html>"""
+
+
 @app.route('/image')
 def image():
     path = url_for("static", filename = 'elephant.jpg')
@@ -38,3 +44,25 @@ def image():
         <img src="''' + path + '''">
     </body>
 </html>'''
+
+count = 0 
+
+@app.route('/count')
+def counter():
+    global count
+    count += 1
+    time = datetime.datetime.today()
+    url = request.url
+    client_ip = request.remote_addr
+    return '''
+<!doctype html>
+<html>
+    <body>
+        Сколько раз вы сюда заходили ''' + str(count) + '''
+        <hr>
+        <p>Дата и время : ''' + str(time) + '''</p>
+        <p>Запрошенный адрес : ''' + url + '''</p>
+        <p>IP-адрес клиента : ''' + client_ip + '''</p>
+    </body>
+</html>
+'''
