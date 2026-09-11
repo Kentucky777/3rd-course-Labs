@@ -74,9 +74,27 @@ def counter():
         <p>Дата и время : ''' + str(time) + '''</p>
         <p>Запрошенный адрес : ''' + url + '''</p>
         <p>IP-адрес клиента : ''' + client_ip + '''</p>
+        <p><a href="/cleaner">Очистить счётчик</a></p>
     </body>
 </html>
 '''
+
+
+@app.route("/cleaner")
+def cleaner():
+    global count
+    count = 0
+    return '''
+<!doctype html>
+<html>
+    <body>
+        <p>Счётчик отчищен!</p>
+        <p><a href="/count">Вернуться к информации</a></p>
+    </body>
+</html>
+'''
+
+
 @app.route("/info")
 def info():
     return redirect("/author")
