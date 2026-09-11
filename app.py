@@ -9,7 +9,7 @@ def not_found(err):
 @app.route("/")
 @app.route("/web")
 def start():
-    return """<!docktype html>
+    return """<!doctype html>
         <html>
            <body>
                <h1> web-сервер на Flask</h1>
@@ -20,7 +20,7 @@ def start():
            <body>
         <html>""", 200, {
             'X-server': 'sample',
-            'Content-Type' : 'text/plain; charset=utf-8'
+            'Content-Type' : 'text/html; charset=utf-8'
         }
 
 
@@ -47,6 +47,9 @@ def image():
     return '''
 <!doctype html>
 <html>
+<head>
+    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1.css') + '''">
+</head>
     <body>
         <h1>Слон</h1>
         <img src="''' + path + '''">
