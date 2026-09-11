@@ -6,7 +6,32 @@ app = Flask(__name__)
 def not_found(err):
     return "Нет такой страницы", 404
 
+
 @app.route("/")
+@app.route("/index")
+def main():
+    return '''
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Байков Никита Дмитриевич. Лабораторная 1</title>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, WEB-программирование часть 2, Лабораторная 1
+    </header>
+    <main>
+        <a href="/lab1">Лаборатоная 1</a>
+    </main>
+    <footer>
+        &copy; Байков Никита, ФБИ-41, 3 курс, 2026
+    </footer>
+    
+</body>
+</html>
+'''
 @app.route("/lab1/web")
 def start():
     return """<!doctype html>
