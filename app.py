@@ -1,10 +1,77 @@
-from flask import Flask, url_for, request, redirect
+from flask import Flask, url_for, request, redirect, abort
+from werkzeug.exceptions import HTTPException
 import datetime
+
 app = Flask(__name__)
+
+class PaymentRequired(HTTPException):
+    code = 402
+    description = "Требуется оплата"
+
+
+@app.route("/400")
+def route400():
+    abort(400)
+
+
+@app.route("/401")
+def route401():
+    abort(401)
+
+
+@app.route("/402")
+def route402():
+    raise PaymentRequired
+
+
+@app.route("/403")
+def route403():
+    abort(403)
+
+
+@app.route("/405")
+def route405():
+    abort(405)
+
+
+@app.route("/418")
+def route418():
+    abort(418)
+
 
 @app.errorhandler(404)
 def not_found(err):
     return "Нет такой страницы", 404
+
+
+@app.errorhandler(400)
+def c400(err):
+    return "Неверный запрос", 400
+
+
+@app.errorhandler(401)
+def c401(err):
+    return "Неавторизованный запрос", 401
+
+
+@app.errorhandler(PaymentRequired)
+def c402(err):
+    return "Необходима оплата", 402
+
+
+@app.errorhandler(403)
+def c403(err):
+    return "Запрещено", 403
+
+
+@app.errorhandler(405)
+def c405(err):
+    return "Метод не разрешён", 405
+
+
+@app.errorhandler(418)
+def c418(err):
+    return "Шутливый код", 418
 
 
 @app.route("/")
