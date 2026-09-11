@@ -7,16 +7,16 @@ def not_found(err):
     return "Нет такой страницы", 404
 
 @app.route("/")
-@app.route("/web")
+@app.route("/lab1/web")
 def start():
     return """<!doctype html>
         <html>
            <body>
                <h1> web-сервер на Flask</h1>
-               <p><a href="/author">Автор</a></p>
-               <p><a href="/image">Слон</a></p>
-               <p><a href="/count">Счетчик и данные</a></p>
-               <p><a href="/created">Создание</a></p>
+               <p><a href="/lab1/author">Автор</a></p>
+               <p><a href="/lab1/image">Слон</a></p>
+               <p><a href="/lab1/count">Счетчик и данные</a></p>
+               <p><a href="/lab1/created">Создание</a></p>
            <body>
         <html>""", 200, {
             'X-server': 'sample',
@@ -24,7 +24,7 @@ def start():
         }
 
 
-@app.route("/author")
+@app.route("/lab1/author")
 def author():
     name = "Байков Никита Дмитриевич"
     group = "ФБИ-41"
@@ -36,12 +36,12 @@ def author():
             <p> Студент: """ + name + """</p>
             <p> Группа : """ + group + """</p>
             <p> Факультет: """ + faculty + """
-            <p><a href="/web">web</a></p>
+            <p><a href="/lab1/web">web</a></p>
             </body>
         </html>"""
 
 
-@app.route('/image')
+@app.route('/lab1/image')
 def image():
     path = url_for("static", filename = 'elephant.jpg')
     return '''
@@ -58,7 +58,7 @@ def image():
 
 count = 0 
 
-@app.route('/count')
+@app.route('/lab1/count')
 def counter():
     global count
     count += 1
@@ -74,13 +74,13 @@ def counter():
         <p>Дата и время : ''' + str(time) + '''</p>
         <p>Запрошенный адрес : ''' + url + '''</p>
         <p>IP-адрес клиента : ''' + client_ip + '''</p>
-        <p><a href="/cleaner">Очистить счётчик</a></p>
+        <p><a href="/lab1/cleaner">Очистить счётчик</a></p>
     </body>
 </html>
 '''
 
 
-@app.route("/cleaner")
+@app.route("/lab1/cleaner")
 def cleaner():
     global count
     count = 0
@@ -89,18 +89,18 @@ def cleaner():
 <html>
     <body>
         <p>Счётчик отчищен!</p>
-        <p><a href="/count">Вернуться к информации</a></p>
+        <p><a href="/lab1/count">Вернуться к информации</a></p>
     </body>
 </html>
 '''
 
 
-@app.route("/info")
+@app.route("/lab1/info")
 def info():
-    return redirect("/author")
+    return redirect("/lab1/author")
 
 
-@app.route("/created")
+@app.route("/lab1/created")
 def created():
     return '''
 <!doctype html>
