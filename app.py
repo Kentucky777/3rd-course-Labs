@@ -41,7 +41,27 @@ def route418():
 
 @app.errorhandler(404)
 def not_found(err):
-    return "Нет такой страницы", 404
+    return '''
+<!doctype html>
+<html>
+<head>
+    <style>
+        body{
+        color : red;
+        background-color: black
+        }
+        img{
+        height: 400px;
+        weight: 600px;
+        }
+    </style>
+</head>
+    <body>
+        <h1>Страница не найдена</h1>
+        <p><img src ="''' + url_for("static", filename="error.webp") + '''"</p>
+    </body>
+</html>
+''', 404
 
 
 @app.errorhandler(400)
