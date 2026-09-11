@@ -32,6 +32,25 @@ def main():
 </body>
 </html>
 '''
+
+
+@app.route("/lab1")
+def citata():
+    return '''
+<!doctype html>
+<html>
+    <head>
+        <title>Лабораторная 1</title>
+    </head>
+    <body>
+        <h1>«Человек он умный, но чтоб умно поступать — одного ума мало».</h1>
+        <p>Фёдор Достоевский</p>
+        <p><a href="/">Главная</a></p>
+    </body>
+</html>
+'''
+
+
 @app.route("/lab1/web")
 def start():
     return """<!doctype html>
