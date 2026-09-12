@@ -150,6 +150,24 @@ def citata():
         <h1>«Человек он умный, но чтоб умно поступать — одного ума мало».</h1>
         <p>Фёдор Достоевский</p>
         <p><a href="/">Главная</a></p>
+        <h2>Меню</h2>
+        <p><a href="/lab1/author">Автор</a></p>
+        <p><a href="/lab1/image">Слон</a></p>
+        <p><a href="/lab1/count">Счетчик и данные</a></p>
+        <p><a href="/lab1/created">Создание</a></p>
+        <p><a href="/lab1/image2">Elephant</a></p>
+        <p><a href="/lab1/image3">Elefant</a></p>
+        <p><a href="/lab1/cleaner">Очистка</a></p>
+        <p><a href="/lab1/info">Информация</a></p>
+        <p><a href="/lab1/web">web</a></p>
+        <p><a href="/400">Ошибка 400</a></p>
+        <p><a href="/401">Ошибка 401</a></p>
+        <p><a href="/402">Ошибка 402</a></p>
+        <p><a href="/403">Ошибка 403</a></p>
+        <p><a href="/404">Ошибка 404</a></p>
+        <p><a href="/405">Ошибка 405</a></p>
+        <p><a href="/418">Ошибка 418</a></p>
+        <p><a href="/lab1/fail">Ошибка 500</a></p>
     </body>
 </html>
 '''
@@ -161,10 +179,6 @@ def start():
         <html>
            <body>
                <h1> web-сервер на Flask</h1>
-               <p><a href="/lab1/author">Автор</a></p>
-               <p><a href="/lab1/image">Слон</a></p>
-               <p><a href="/lab1/count">Счетчик и данные</a></p>
-               <p><a href="/lab1/created">Создание</a></p>
            <body>
         <html>""", 200, {
             'X-server': 'sample',
