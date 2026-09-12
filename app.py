@@ -202,7 +202,48 @@ def image():
         <h1>Слон</h1>
         <img src="''' + path + '''">
     </body>
-</html>'''
+</html>''', {'Content-Language': 'ru-RU',
+             'X-image' : 'slon',
+             'X-prost' : 'prosto'
+        }
+
+
+@app.route('/lab1/image2')
+def image2():
+    path = url_for("static", filename = 'elephant.jpg')
+    return '''
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1.css') + '''">
+</head>
+    <body>
+        <h1>Elephant</h1>
+        <img src="''' + path + '''">
+    </body>
+</html>''', {'Content-Language': 'en-EN',
+             'X-image' : 'slon',
+             'X-prost' : 'prosto'
+        }
+
+
+@app.route('/lab1/image3')
+def image3():
+    path = url_for("static", filename = 'elephant.jpg')
+    return '''
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1.css') + '''">
+</head>
+    <body>
+        <h1>Elefant</h1>
+        <img src="''' + path + '''">
+    </body>
+</html>''', {'Content-Language': 'de-DE',
+             'X-image' : 'slon',
+             'X-prost' : 'prosto'
+        }
 
 count = 0 
 
