@@ -94,6 +94,23 @@ def c418(err):
     return "Шутливый код", 418
 
 
+@app.errorhandler(500)
+def c500(err):
+    return '''
+<!doctype html>
+<html>
+    <body>
+        Была замечена ошибка в коде программы!
+    </body>
+</html>
+''', 500, {
+    'Content-Language': 'ru-RU'
+}
+
+@app.route('/lab1/fail')
+def fail():
+    return 1 / 0
+
 @app.route("/")
 @app.route("/index")
 def main():
