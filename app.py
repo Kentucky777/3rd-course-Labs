@@ -41,6 +41,13 @@ def route418():
 
 @app.errorhandler(404)
 def not_found(err):
+    log = []
+    client_ip = request.remote_addr
+    date = datetime.date.today()
+    time = datetime.datetime.today()
+    url = request.url
+    client_ip = request.remote_addr
+    log.append = f"{time} + {url} + {client_ip}"
     return '''
 <!doctype html>
 <html>
@@ -58,7 +65,11 @@ def not_found(err):
 </head>
     <body>
         <h1>Страница не найдена</h1>
+        <p>IP-адрес: ''' + client_ip + '''</p>
+        <p>Дата посещения: ''' + str(date) + '''</p>
+        <p><a href="/">Главная</a></p>
         <p><img src ="''' + url_for("static", filename="error.webp") + '''"</p>
+        <p>Лог: ''' + str(log) + '''</p>
     </body>
 </html>
 ''', 404
