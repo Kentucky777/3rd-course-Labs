@@ -3,11 +3,24 @@ from werkzeug.exceptions import HTTPException
 import datetime
 
 app = Flask(__name__)
+log = []
+date = None
+client_ip = None
 
 class PaymentRequired(HTTPException):
     code = 402
     description = "Требуется оплата"
 
+@app.before_request
+def log_req():
+    global client_ip
+    global date
+    time = datetime.datetime.today()
+    client_ip = request.remote_addr
+    date = time.date()
+    url = request.url
+    txt = f"{time}, пользователь {client_ip} заходил на адрес: {url}"
+    log.append(txt)
 
 @app.route("/400")
 def route400():
@@ -39,15 +52,25 @@ def route418():
     abort(418)
 
 
+@app.route("/cleanlog")
+def clean_log():
+    global log
+    log = []
+    return'''
+<!doctype html>
+<html>
+    <body>
+        <h1>Лог очищен!</h1>
+        <p><a href="/">Главная</a></p>
+    </body>
+</html>
+'''
+
 @app.errorhandler(404)
 def not_found(err):
-    log = []
-    client_ip = request.remote_addr
-    date = datetime.date.today()
-    time = datetime.datetime.today()
-    url = request.url
-    client_ip = request.remote_addr
-    log.append = f"{time} + {url} + {client_ip}"
+    global log
+    global date
+    global client_ip
     return '''
 <!doctype html>
 <html>
@@ -69,7 +92,8 @@ def not_found(err):
         <p>Дата посещения: ''' + str(date) + '''</p>
         <p><a href="/">Главная</a></p>
         <p><img src ="''' + url_for("static", filename="error.webp") + '''"</p>
-        <p>Лог: ''' + str(log) + '''</p>
+        <p>Лог: ''' + '<br>'.join(log) + '''</p>
+        <p><a href="/cleanlog">Очистить лог</a></p>
     </body>
 </html>
 ''', 404
