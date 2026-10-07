@@ -68,13 +68,12 @@ def clean_log():
 
 @app.errorhandler(404)
 def not_found(err):
-    log = []
+    global log
     client_ip = request.remote_addr
     date = datetime.date.today()
     time = datetime.datetime.today()
     url = request.url
     client_ip = request.remote_addr
-    log.append(f"{time} + {url} + {client_ip}")
     return '''
 <!doctype html>
 <html>
@@ -363,3 +362,12 @@ def a():
 @app.route("/lab2/a/")
 def a2():
     return 'со слэшем'
+
+
+flower_list = ('роза', 'тюльпан','незабудка','ромашка')
+@app.route('/lab2/flowers/<int:flower_id>')
+def flowers(flower_id):
+    if flower_id >= len(flower_list):
+        abort(404)
+    else:
+        return "цветок: " + flower_list[flower_id]
