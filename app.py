@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, redirect, abort
+from flask import Flask, url_for, request, redirect, abort, render_template
 from werkzeug.exceptions import HTTPException
 import datetime
 
@@ -387,3 +387,8 @@ def add_flowers(name):
     </body<
 </html>
 '''
+
+
+@app.route('/lab2/example/')
+def example():
+    return render_template('example.html')
