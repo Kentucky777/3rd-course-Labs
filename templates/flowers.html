@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная 2{% endblock %}
+
+{% block main%}
+    <div>Количество цветов : {{ len_f }}</div>
+    <ol>
+        {% for i in flower_list %}
+        <li>{{ i }}</li>
+        {% endfor %}
+    </ol>
+    <a href="/lab2/cleanfl">Очистить список цветов</a>
+{% endblock %}

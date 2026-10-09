@@ -370,7 +370,8 @@ def flowers(flower_id):
     if flower_id >= len(flower_list):
         abort(404)
     else:
-        return "цветок: " + flower_list[flower_id]
+        f_lower = flower_list[flower_id]
+        return render_template('flowerslist.html', f_lower=f_lower)
 
 
 @app.route('/lab2/add_flower/<name>')
@@ -379,12 +380,40 @@ def add_flowers(name):
     return f'''
 <!doctype html>
 <html>
-    <body>
-    <h1>Доабвлен новый цветок</h1>
+<body>
+    <h1>Добавлен новый цветок</h1>
     <p>Название нового цветка: {name}</p>
     <p>Всего цветов: {len(flower_list)}</p>
     <p>Полный список: {flower_list}</p>
-    </body<
+    <a href="/lab2/flowers/">Цветы</a>
+</body<
+</html>
+'''
+
+
+@app.route('/lab2/add_flower/')
+def addflower():
+    return 'Вы не задали имя цветка', 400
+
+
+@app.route('/lab2/flowers/')
+def flowers_list():
+    global flower_list
+    len_f = len(flower_list)
+    return render_template('flowers.html', len_f=len_f, flower_list=flower_list)
+
+
+@app.route('/lab2/cleanfl/')
+def clean():
+    global flower_list
+    flower_list.clear()
+    return f'''
+<!doctype html>
+<html>
+<body>
+    <div>Список очищен</div>
+    <a href="/lab2/flowers">Цветы</a>
+</body>
 </html>
 '''
 
