@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная 2{% endblock %}
+
+{% block main%}
+    {% for f in books %}
+    <li>{{ loop.index }}. {{ f.title }}, {{ f.author  }}, Количество страниц: {{ f.pages }}, Жанр: {{ f.genre }}</li>
+    {% endfor %}
+{% endblock %}
