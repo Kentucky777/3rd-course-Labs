@@ -165,7 +165,8 @@ def main():
         НГТУ, ФБ, WEB-программирование часть 2, Лабораторная 1
     </header>
     <main>
-        <a href="/lab1">Лаборатоная 1</a>
+        <a href="/lab1">Лаборатоная 1</a><br>
+        <a href="/lab2">Лабораторная 2</a>
     </main>
     <footer>
         &copy; Байков Никита, ФБИ-41, 3 курс, 2026
@@ -393,7 +394,7 @@ def add_flowers(name):
 
 @app.route('/lab2/add_flower/')
 def addflower():
-    return 'Вы не задали имя цветка', 400
+    return 'Вы не задали имя цветка, добавьте его название в посиковую строку!', 400
 
 
 @app.route('/lab2/flowers/')
@@ -452,7 +453,7 @@ def calc(a,b):
 
 @app.route('/lab2/calc/')
 def redir():
-    return redirect('lab2/calc/1/1')
+    return redirect('/lab2/calc/1/1')
 
 
 @app.route('/lab2/calc/<int:a>')
