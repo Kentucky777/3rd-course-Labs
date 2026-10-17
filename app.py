@@ -525,3 +525,130 @@ def books():
     },
 ]
     return render_template('books.html', books = books)
+
+
+@app.route('/lab2/objects/')
+def objects():
+    obj = [
+            {
+            "brand": "Toyota",
+            "model": "GR Yaris",
+            "year": 2020,
+            "image": "toyota_gr_yaris.jpg",
+        },
+        {
+            "brand": "Toyota",
+            "model": "GR Supra",
+            "year": 2019,
+            "image": "toyota_gr_supra.jpg",
+        },
+        {
+            "brand": "Toyota",
+            "model": "GR86",
+            "year": 2021,
+            "image": "toyota_gr86.jpg",
+        },
+        {
+            "brand": "Toyota",
+            "model": "Land Cruiser 300",
+            "year": 2021,
+            "image": "toyota_land_cruiser_300.jpg",
+        },
+        {
+            "brand": "Lexus",
+            "model": "LFA",
+            "year": 2010,
+            "image": "lexus_lfa.jpg",
+        },
+        {
+            "brand": "Lexus",
+            "model": "LC 500",
+            "year": 2017,
+            "image": "lexus_lc_500.jpg",
+        },
+        {
+            "brand": "Lexus",
+            "model": "IS 500 F",
+            "year": 2021,
+            "image": "lexus_is_500_f.jpg",
+        },
+        {
+            "brand": "Nissan",
+            "model": "GT-R Nismo",
+            "year": 2014,
+            "image": "nissan_gtr_nismo.jpg",
+        },
+        {
+            "brand": "Nissan",
+            "model": "Z350",
+            "year": 2022,
+            "image": "nissan_z350.jpg",
+        },
+        {
+            "brand": "Nissan",
+            "model": "Leaf",
+            "year": 2010,
+            "image": "nissan_leaf.jpg",
+        },
+        {
+            "brand": "Honda",
+            "model": "Civic Type R",
+            "year": 2022,
+            "image": "honda_civic_type_r.jpg",
+        },
+        {
+            "brand": "Honda",
+            "model": "NSX",
+            "year": 2016,
+            "image": "honda_nsx.jpg",
+        },
+        {
+            "brand": "Honda",
+            "model": "S660",
+            "year": 2015,
+            "image": "honda_s660.jpg",
+        },
+        {
+            "brand": "Mazda",
+            "model": "MX-5 Miata",
+            "year": 2015,
+            "image": "mazda_mx5_miata.jpg",
+        },
+        {
+            "brand": "Mazda",
+            "model": "CX-60",
+            "year": 2022,
+            "image": "mazda_cx60.jpg",
+        },
+        {
+            "brand": "Subaru",
+            "model": "BRZ",
+            "year": 2021,
+            "image": "subaru_brz.jpg",
+        },
+        {
+            "brand": "Subaru",
+            "model": "WRX",
+            "year": 2021,
+            "image": "subaru_wrx.jpg",
+        },
+        {
+            "brand": "Mitsubishi",
+            "model": "Lancer Evolution X",
+            "year": 2015,
+            "image": "mitsubishi_lancer_evo_x.jpg",
+        },
+        {
+            "brand": "Suzuki",
+            "model": "Jimny",
+            "year": 2018,
+            "image": "suzuki_jimny.jpg",
+        },
+        {
+            "brand": "Suzuki",
+            "model": "Swift Sport",
+            "year": 2017,
+            "image": "suzuki_swift_sport.jpg",
+        }
+    ]
+    return render_template('objects.html', obj = obj)

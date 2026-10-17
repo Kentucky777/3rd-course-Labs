@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная 2{% endblock %}
+
+{% block main%}
+    {% for f in obj %}
+    <div>
+        <img src="{{ url_for('static', filename=f.image) }}" width=15% height=15%>
+        <h3>{{ f.brand }}, {{ f.model }} , Год выпуска: {{f. year }}</h3>
+    </div>
+    {% endfor %}
+{% endblock %}
