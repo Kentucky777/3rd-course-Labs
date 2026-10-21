@@ -6,8 +6,10 @@
     <div>Количество цветов : {{ len_f }}</div>
     <ol>
         {% for i in flower_list %}
-        <li>{{ i }}</li>
+        <li>{{ i.name }}: {{i.price}} - <a href="/lab2/del_flower/{{ loop.index}}">удалить</a> </li>
         {% endfor %}
     </ol>
-    <a href="/lab2/cleanfl">Очистить список цветов</a>
+    <a href="/lab2/cleanfl">Очистить список цветов</a><br>
+    <a href="/lab2/sortname/">Отсортировать по имени</a><br>
+    <a href="/lab2/sortprice/">Отсортировать по цене</a>
 {% endblock %}

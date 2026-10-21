@@ -365,7 +365,12 @@ def a2():
     return 'со слэшем'
 
 
-flower_list = ['роза', 'тюльпан','незабудка','ромашка']
+flower_list = [
+    {'name':'роза', 'price': 120}, 
+    {'name':'тюльпан', 'price': 150},
+    {'name':'незабудка','price': 90},
+    {'name':'ромашка','price': 50}
+    ]
 @app.route('/lab2/flowers/<int:flower_id>')
 def flowers(flower_id):
     if flower_id >= len(flower_list):
@@ -375,26 +380,20 @@ def flowers(flower_id):
         return render_template('flowerslist.html', f_lower=f_lower)
 
 
-@app.route('/lab2/add_flower/<name>')
-def add_flowers(name):
-    flower_list.append(name)
-    return f'''
-<!doctype html>
-<html>
-<body>
-    <h1>Добавлен новый цветок</h1>
-    <p>Название нового цветка: {name}</p>
-    <p>Всего цветов: {len(flower_list)}</p>
-    <p>Полный список: {flower_list}</p>
-    <a href="/lab2/flowers/">Цветы</a>
-</body<
-</html>
-'''
+@app.route('/lab2/add_flower/<name>/<int:price>')
+def add_flowers(name,price):
+    flower_list.append({'name':name,'price':price})
+    fl_len = len(flower_list)
+    return render_template('floweradd.html', flower_list=flower_list, name=name, fl_len = fl_len, price=price)
 
 
-@app.route('/lab2/add_flower/')
-def addflower():
-    return 'Вы не задали имя цветка, добавьте его название в посиковую строку!', 400
+@app.route('/lab2/del_flower/<int:id>')
+def del_fl(id):
+    if id > len(flower_list) or id == 0:
+        abort(404) 
+    else:
+        del flower_list[id-1]
+        return render_template('flowerdel.html', id = id)
 
 
 @app.route('/lab2/flowers/')
@@ -402,6 +401,16 @@ def flowers_list():
     global flower_list
     len_f = len(flower_list)
     return render_template('flowers.html', len_f=len_f, flower_list=flower_list)
+
+@app.route('/lab2/sortname/')
+def sortname():
+    flower_list.sort(key= lambda x: x['name'])
+    return render_template('sortname.html')
+
+@app.route('/lab2/sortprice/')
+def sortprice():
+    flower_list.sort(key= lambda x: x['price'])
+    return render_template('sortprice.html')
 
 
 @app.route('/lab2/cleanfl/')
