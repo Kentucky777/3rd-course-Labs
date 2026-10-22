@@ -1,12 +1,14 @@
 from flask import Flask, url_for, request, redirect, abort, render_template
 from lab1 import lab1
 from lab2 import lab2
+from lab3 import lab3
 from werkzeug.exceptions import HTTPException
 import datetime
 
 app = Flask(__name__)
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
+app.register_blueprint(lab3)
 log = []
 date = None
 client_ip = None
@@ -167,7 +169,8 @@ def main():
     </header>
     <main>
         <a href="/lab1">Лаборатоная 1</a><br>
-        <a href="/lab2">Лабораторная 2</a>
+        <a href="/lab2">Лабораторная 2</a><br>
+        <a href="/lab3">Лабораторная 3</a>
     </main>
     <footer>
         &copy; Байков Никита, ФБИ-41, 3 курс, 2026
