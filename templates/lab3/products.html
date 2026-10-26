@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная 3{% endblock %}
+
+{% block main %}
+<h1>Поиск товаров по цене</h1>
+
+<form action="/lab3/products">
+    <div>
+        <label for="min_price">Мин. цена:</label>
+        <input type="number" id="min_price" name="min_price" value="{{ min_price }}" placeholder="{{ min_limit }}">
+    </div>
+
+    <div>
+        <label for="max_price">Макс. цена:</label>
+        <input type="number" id="max_price" name="max_price" value="{{ max_price }}" placeholder="{{ max_limit }}">
+    </div>
+
+    <div>
+        <button type="submit" name="search" value="1">Искать</button>
+        <button type="submit" name="reset" value="1">Сброс</button>
+    </div>
+</form>
+
+<p>Количество найденных товаров: {{ count }}</p>
+
+{% if products %}
+    <ul>
+        {% for p in products %}
+            <li>
+                <strong>{{ p.name }}</strong> — {{ p.price }} руб. (Бренд: {{ p.brand }}, Память: {{ p.storage }})
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Не найдено ни одного товара</p>
+{% endif %}
+{% endblock %}

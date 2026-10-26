@@ -171,3 +171,104 @@ def clean():
     resp.set_cookie('back')
     resp.set_cookie('size')
     return resp
+
+
+products = [
+    {"name": "Apple iPhone 13", "price": 60000, "brand": "Apple", "storage": "128 ГБ"},
+    {"name": "Apple iPhone 14", "price": 70000, "brand": "Apple", "storage": "128 ГБ"},
+    {"name": "Apple iPhone 15", "price": 80000, "brand": "Apple", "storage": "128 ГБ"},
+    {"name": "Apple iPhone 15 Pro", "price": 115000, "brand": "Apple", "storage": "256 ГБ"},
+    {"name": "Apple iPhone 16", "price": 95000, "brand": "Apple", "storage": "128 ГБ"},
+    {"name": "Samsung Galaxy A15", "price": 15000, "brand": "Samsung", "storage": "128 ГБ"},
+    {"name": "Samsung Galaxy A25", "price": 21000, "brand": "Samsung", "storage": "128 ГБ"},
+    {"name": "Samsung Galaxy A35", "price": 28000, "brand": "Samsung", "storage": "128 ГБ"},
+    {"name": "Samsung Galaxy A55", "price": 37000, "brand": "Samsung", "storage": "256 ГБ"},
+    {"name": "Samsung Galaxy S23", "price": 58000, "brand": "Samsung", "storage": "128 ГБ"},
+    {"name": "Samsung Galaxy S24", "price": 75000, "brand": "Samsung", "storage": "256 ГБ"},
+    {"name": "Samsung Galaxy S24 Ultra", "price": 125000, "brand": "Samsung", "storage": "512 ГБ"},
+    {"name": "Xiaomi Redmi 13C", "price": 11000, "brand": "Xiaomi", "storage": "128 ГБ"},
+    {"name": "Xiaomi Redmi Note 13", "price": 18000, "brand": "Xiaomi", "storage": "128 ГБ"},
+    {"name": "Xiaomi Redmi Note 13 Pro", "price": 29000, "brand": "Xiaomi", "storage": "256 ГБ"},
+    {"name": "Xiaomi 13T", "price": 42000, "brand": "Xiaomi", "storage": "256 ГБ"},
+    {"name": "Xiaomi 14", "price": 83000, "brand": "Xiaomi", "storage": "512 ГБ"},
+    {"name": "POCO M6 Pro", "price": 19000, "brand": "POCO", "storage": "256 ГБ"},
+    {"name": "POCO X6 Pro", "price": 27000, "brand": "POCO", "storage": "256 ГБ"},
+    {"name": "POCO F6", "price": 39000, "brand": "POCO", "storage": "512 ГБ"},
+    {"name": "Realme C53", "price": 12000, "brand": "Realme", "storage": "128 ГБ"},
+    {"name": "Realme 11", "price": 20000, "brand": "Realme", "storage": "256 ГБ"},
+    {"name": "Realme 12 Pro", "price": 33000, "brand": "Realme", "storage": "256 ГБ"},
+    {"name": "Realme GT 6", "price": 55000, "brand": "Realme", "storage": "512 ГБ"},
+    {"name": "Google Pixel 7a", "price": 43000, "brand": "Google", "storage": "128 ГБ"},
+    {"name": "Google Pixel 8", "price": 62000, "brand": "Google", "storage": "128 ГБ"},
+    {"name": "Google Pixel 8 Pro", "price": 89000, "brand": "Google", "storage": "256 ГБ"},
+    {"name": "Infinix Hot 40", "price": 13000, "brand": "Infinix", "storage": "128 ГБ"},
+    {"name": "Infinix Note 40", "price": 22000, "brand": "Infinix", "storage": "256 ГБ"},
+    {"name": "Tecno Camon 30", "price": 24000, "brand": "Tecno", "storage": "256 ГБ"},
+]
+
+@lab3.route('/lab3/products')
+def products_page():
+    if 'reset' in request.args:
+        resp = make_response(redirect('/lab3/products'))
+        resp.delete_cookie('min_price')
+        resp.delete_cookie('max_price')
+        return resp
+
+    if 'search' in request.args:
+        min_price = request.args.get('min_price', '').strip()
+        max_price = request.args.get('max_price', '').strip()
+
+        if min_price and max_price:
+            try:
+                if float(min_price) > float(max_price):
+                    min_price, max_price = max_price, min_price
+            except ValueError:
+                pass
+
+        resp = make_response(redirect('/lab3/products'))
+        if min_price:
+            resp.set_cookie('min_price', min_price)
+        else:
+            resp.delete_cookie('min_price')
+
+        if max_price:
+            resp.set_cookie('max_price', max_price)
+        else:
+            resp.delete_cookie('max_price')
+
+        return resp
+
+
+    min_price = request.cookies.get('min_price', '')
+    max_price = request.cookies.get('max_price', '')
+
+
+    min_limit = min(p['price'] for p in products)
+    max_limit = max(p['price'] for p in products)
+
+
+    filtered_products = []
+    for p in products:
+        if min_price:
+            try:
+                if p['price'] < float(min_price):
+                    continue
+            except ValueError:
+                pass
+        if max_price:
+            try:
+                if p['price'] > float(max_price):
+                    continue
+            except ValueError:
+                pass
+        filtered_products.append(p)
+
+    return render_template(
+        'lab3/products.html',
+        products=filtered_products,
+        min_price=min_price,
+        max_price=max_price,
+        min_limit=min_limit,
+        max_limit=max_limit,
+        count=len(filtered_products)
+    )
