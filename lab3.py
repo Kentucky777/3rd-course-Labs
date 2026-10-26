@@ -67,3 +67,25 @@ def pay():
 @lab3.route('/lab3/success/<int:price>')
 def success(price):
     return render_template('/lab3/success.html', price=price)
+
+
+@lab3.route('/lab3/settings')
+def settings():
+    color = request.args.get('color')
+    back = request.args.get('back')
+    size = request.args.get('size')
+    if color or back or size:
+        resp = make_response(redirect('/lab3/settings'))
+        if color:
+            resp.set_cookie('color', color)
+        if back:
+            resp.set_cookie('back', back)
+        if size:
+            resp.set_cookie('size', size)
+        return resp
+
+    color = request.cookies.get('color')
+    back = request.cookies.get('back')
+    size = request.cookies.get('size')
+    resp = make_response(render_template('lab3/settings.html', color=color, back=back, size=size))
+    return resp

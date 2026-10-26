@@ -8,6 +8,19 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ url_for('static', filename='favicon-16x16.png') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <style>
+        body{
+            {% if request.cookies.get('color') %}
+            color: {{ request.cookies.get('color') }};
+            {% endif %}
+            {% if request.cookies.get('back') %}
+            background-color: {{ request.cookies.get('back') }};
+            {% endif %}
+            {% if request.cookies.get('size') %}
+            font-size: {{ request.cookies.get('size') }}px;
+            {% endif %}
+        }
+    </style>
 </head>
 <body>
     <header>
