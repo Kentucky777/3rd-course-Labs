@@ -26,14 +26,14 @@ def flowers(flower_id):
         abort(404)
     else:
         f_lower = flower_list[flower_id]
-        return render_template('flowerslist.html', f_lower=f_lower)
+        return render_template('lab2/flowerslist.html', f_lower=f_lower)
 
 
 @lab2.route('/lab2/add_flower/<name>/<int:price>')
 def add_flowers(name,price):
     flower_list.append({'name':name,'price':price})
     fl_len = len(flower_list)
-    return render_template('floweradd.html', flower_list=flower_list, name=name, fl_len = fl_len, price=price)
+    return render_template('lab2/floweradd.html', flower_list=flower_list, name=name, fl_len = fl_len, price=price)
 
 
 @lab2.route('/lab2/add_flower/<name>/')
@@ -47,24 +47,24 @@ def del_fl(id):
         abort(404) 
     else:
         del flower_list[id-1]
-        return render_template('flowerdel.html', id = id)
+        return render_template('lab2/flowerdel.html', id = id)
 
 
 @lab2.route('/lab2/flowers/')
 def flowers_list():
     global flower_list
     len_f = len(flower_list)
-    return render_template('flowers.html', len_f=len_f, flower_list=flower_list)
+    return render_template('lab2/flowers.html', len_f=len_f, flower_list=flower_list)
 
 @lab2.route('/lab2/sortname/')
 def sortname():
     flower_list.sort(key= lambda x: x['name'])
-    return render_template('sortname.html')
+    return render_template('lab2/sortname.html')
 
 @lab2.route('/lab2/sortprice/')
 def sortprice():
     flower_list.sort(key= lambda x: x['price'])
-    return render_template('sortprice.html')
+    return render_template('lab2/sortprice.html')
 
 
 @lab2.route('/lab2/cleanfl/')
@@ -95,23 +95,23 @@ def example():
         {'name':'мандарины', 'price' : 95},
         {'name':'манго', 'price' : 321}
     ]
-    return render_template('example.html', name = name, number = number, group=group, course=course, fruits=fruits)
+    return render_template('lab2/example.html', name = name, number = number, group=group, course=course, fruits=fruits)
 
 
 @lab2.route('/lab2/')
 def lab():
-    return render_template('lab2.html')
+    return render_template('lab2/lab2.html')
 
 
 @lab2.route('/lab2/filters/')
 def filters():
     phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
-    return render_template('filter.html', phrase=phrase)
+    return render_template('lab2/filter.html', phrase=phrase)
 
 
 @lab2.route('/lab2/calc/<int:a>/<int:b>')
 def calc(a,b):
-    return render_template('calc.html', a=a, b=b)
+    return render_template('lab2/calc.html', a=a, b=b)
 
 
 @lab2.route('/lab2/calc/')
@@ -188,7 +188,7 @@ def books():
         "genre": "Классический роман",
     },
 ]
-    return render_template('books.html', books = books)
+    return render_template('lab2/books.html', books = books)
 
 
 @lab2.route('/lab2/objects/')
@@ -315,4 +315,4 @@ def objects():
             "image": "suzuki_swift_sport.jpg",
         }
     ]
-    return render_template('objects.html', obj = obj)
+    return render_template('lab2/objects.html', obj = obj)

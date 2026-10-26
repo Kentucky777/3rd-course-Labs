@@ -73,12 +73,12 @@ def author():
 
 @lab1.route('/lab1/image')
 def image():
-    path = url_for("static", filename = 'elephant.jpg')
+    path = url_for("static", filename = 'lab1/elephant.jpg')
     return '''
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1.css') + '''">
+    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1/lab1.css') + '''">
 </head>
     <body>
         <h1>Слон</h1>
@@ -92,12 +92,12 @@ def image():
 
 @lab1.route('/lab1/image2')
 def image2():
-    path = url_for("static", filename = 'elephant.jpg')
+    path = url_for("static", filename = 'lab1/elephant.jpg')
     return '''
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1.css') + '''">
+    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1/lab1.css') + '''">
 </head>
     <body>
         <h1>Elephant</h1>
@@ -111,12 +111,12 @@ def image2():
 
 @lab1.route('/lab1/image3')
 def image3():
-    path = url_for("static", filename = 'elephant.jpg')
+    path = url_for("static", filename = 'lab1/elephant.jpg')
     return '''
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1.css') + '''">
+    <link rel="stylesheet" href="'''  + url_for('static', filename='lab1/lab1.css') + '''">
 </head>
     <body>
         <h1>Elefant</h1>
