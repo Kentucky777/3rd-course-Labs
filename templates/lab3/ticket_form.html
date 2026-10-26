@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная 3{% endblock %}
+
+{% block main %}
+<h1>Покупка железнодорожного билета</h1>
+
+<form action="/lab3/ticket">
+    <div>
+        <label for="fio">ФИО пассажира:</label>
+        <input type="text" id="fio" name="fio" value="{{ form.get('fio', '') }}">
+        {% if errors.get('fio') %}<span>{{ errors['fio'] }}</span>{% endif %}
+    </div>
+
+    <div>
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name="age" min="1" max="120" value="{{ form.get('age', '') }}">
+        {% if errors.get('age') %}<span>{{ errors['age'] }}</span>{% endif %}
+    </div>
+
+    <div>
+        <label for="departure">Пункт выезда:</label>
+        <input type="text" id="departure" name="departure" value="{{ form.get('departure', '') }}">
+        {% if errors.get('departure') %}<span>{{ errors['departure'] }}</span>{% endif %}
+    </div>
+
+    <div>
+        <label for="destination">Пункт назначения:</label>
+        <input type="text" id="destination" name="destination" value="{{ form.get('destination', '') }}">
+        {% if errors.get('destination') %}<span>{{ errors['destination'] }}</span>{% endif %}
+    </div>
+
+    <div>
+        <label for="date">Дата поездки:</label>
+        <input type="date" id="date" name="date" value="{{ form.get('date', '') }}">
+        {% if errors.get('date') %}<span>{{ errors['date'] }}</span>{% endif %}
+    </div>
+
+    <div>
+        <label for="berth">Полка:</label>
+        <select id="berth" name="berth">
+            <option value="нижняя" {% if form.get('berth') == 'нижняя' %}selected{% endif %}>Нижняя</option>
+            <option value="верхняя" {% if form.get('berth') == 'верхняя' %}selected{% endif %}>Верхняя</option>
+            <option value="нижняя боковая" {% if form.get('berth') == 'нижняя боковая' %}selected{% endif %}>Нижняя боковая</option>
+            <option value="верхняя боковая" {% if form.get('berth') == 'верхняя боковая' %}selected{% endif %}>Верхняя боковая</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="linen">С бельём:</label>
+        <select id="linen" name="linen">
+            <option value="да" {% if form.get('linen') == 'да' %}selected{% endif %}>Да</option>
+            <option value="нет" {% if form.get('linen') == 'нет' %}selected{% endif %}>Нет</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="luggage">С багажом:</label>
+        <select id="luggage" name="luggage">
+            <option value="да" {% if form.get('luggage') == 'да' %}selected{% endif %}>Да</option>
+            <option value="нет" {% if form.get('luggage') == 'нет' %}selected{% endif %}>Нет</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="insurance">Страховка:</label>
+        <select id="insurance" name="insurance">
+            <option value="да" {% if form.get('insurance') == 'да' %}selected{% endif %}>Да</option>
+            <option value="нет" {% if form.get('insurance') == 'нет' %}selected{% endif %}>Нет</option>
+        </select>
+    </div>
+
+    <div>
+        <button type="submit">Оформить билет</button>
+    </div>
+</form>
+{% endblock %}
