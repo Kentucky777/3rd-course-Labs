@@ -162,3 +162,12 @@ def ticket():
         return render_template('lab3/ticket_form.html', errors=errors, form=request.args)
 
     return render_template('lab3/ticket_form.html', errors={}, form={})
+
+
+@lab3.route('/lab3/cleanc')
+def clean():
+    resp = make_response(redirect('/lab3/'))
+    resp.set_cookie('color')
+    resp.set_cookie('back')
+    resp.set_cookie('size')
+    return resp
