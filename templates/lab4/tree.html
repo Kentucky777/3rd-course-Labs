@@ -3,11 +3,29 @@
 {% block lab %}Нравится / не нравится{% endblock %}
 
 {% block main%}
-    <div>
-        Посажено деревьев: {{ tree_count }}
-    </div>
-    <form method="post">
-        <button name="operation" value="plant">Посадить дерево</button>
-        <button name="operation" value="cut">Срубить дерево</button>
-    </form>
+    {% if tree_count == 0 %}
+        <div>
+            Посажено деревьев: {{ tree_count }}
+        </div>
+        <form method="post">
+            <button name="operation" value="plant">Посадить дерево</button>
+            <button name="operation" value="cut" disabled>Срубить дерево</button>
+        </form>
+    {% elif tree_count == 10 %}
+        <div>
+            Посажено деревьев: {{ tree_count }}
+        </div>
+        <form method="post">
+            <button name="operation" value="plant" disabled>Посадить дерево</button>
+            <button name="operation" value="cut">Срубить дерево</button>
+        </form>
+    {% else %}
+        <div>
+            Посажено деревьев: {{ tree_count }}
+        </div>
+        <form method="post">
+            <button name="operation" value="plant">Посадить дерево</button>
+            <button name="operation" value="cut">Срубить дерево</button>
+        </form>
+    {% endif %}
 {% endblock %}
