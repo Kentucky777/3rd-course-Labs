@@ -3,6 +3,9 @@
 {% block lab %}Лабораторная 4{% endblock %}
 
 {% block main%}
+{%if authorized %}
+    <h1>Добро пожаловать, {{ login }}</h1>
+{% else %}
     <h1>Вход</h1>
     <h2>Пожалуйста, авторизуйстесь</h2>
     <form method="post">
@@ -12,7 +15,7 @@
         </div>
         <div>
             <label for="password">Пароль</label>
-            <input type="password" id="password" name="login">
+            <input type="password" id="password" name="password">
         </div>
         <div>{{ error }}</div>
         <div>
@@ -20,5 +23,5 @@
             <button type="reset">Отмена</button>
         </div>
     </form>
-    
+{% endif %}
 {% endblock %}

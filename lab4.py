@@ -127,12 +127,12 @@ def tree():
 @lab4.route('/lab4/login', methods=['GET','POST'])
 def login():
     if request.method == 'GET':
-        return render_template('lab4/login.html')
+        return render_template('lab4/login.html', authorized=False)
     login = request.form.get('login')
     password = request.form.get('password')
 
     if login == 'alex' and password == '123':
-        return render_template('lab4/login.html', error='Успешная авторизация')
+        return render_template('lab4/login.html', login=login, authorized=True)
 
     error = 'Неверные логин или пароль'
-    return render_template('lab4/login.html')
+    return render_template('lab4/login.html', error=error)
