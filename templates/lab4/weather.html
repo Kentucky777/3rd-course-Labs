@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная 4{% endblock %}
+
+{% block main%}
+{%if result %}
+    <h1>Добро пожаловать</h1>
+    <div>
+        <h2>{{ result }}.Температура {{ temperature }}&deg;C</h2>
+    </div>
+{% else %}
+    <h1>Погода</h1>
+    <h2>Пожалуйста, введите температуру</h2>
+    <form method="post">
+        <div>
+            <label for="temperature">Температура</label>
+            <input type="text" id="temperature" name="temperature">
+        </div>
+        <div style="color: red; font-size: 26px;">{{ error }}</div>
+        <div>
+            <button type="submit">Узнать погоду</button>
+            <button type="reset">Сброс</button>
+        </div>
+    </form>
+{% endif %}
+{% endblock %}
