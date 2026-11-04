@@ -207,3 +207,42 @@ def weather():
         result = 'Слишком жарко'
     
     return render_template('lab4/weather.html', result=result, temperature=temperature)
+
+
+@lab4.route('/lab4/order', methods=['GET', 'POST'])
+def order():
+  prices = {'М200': 4200, 'М300': 4800, 'М400': 5400, 'М500': 6100}
+
+  if request.method == 'GET':
+    return render_template('lab4/order.html', type='М200', prices=prices)
+
+  type = request.form.get('type', 'М200')
+  volume = request.form.get('volume')
+  volume = int(volume)
+
+  if not volume:
+    error = 'Ошибка: не указан объём бетона'
+    return render_template('lab4/order.html', error=error, type=type, volume=volume, prices=prices)
+
+  if volume <= 0:
+    error = 'объём бетона должен быть больше нуля'
+    return render_template('lab4/order.html', error=error, type=type, volume=volume, prices=prices)
+
+  if volume > 100:
+    error = 'Такого объёма сейчас нет в наличии'
+    return render_template('lab4/order.html', error=error, type=type, volume=volume, prices=prices)
+
+  price_per_m3 = prices.get(type, 4200)
+  total = volume * price_per_m3
+  discount_applied = False
+  discount_amount = 0
+
+  if volume > 10:
+    discount_applied = True
+    discount_amount = total * 0.10
+    total_price = total - discount_amount
+
+  else:
+    total_price = total
+
+  return render_template('lab4/order.html', success=True, type=type, volume=volume, total_price=total_price, discount_applied=discount_applied, discount_amount=discount_amount, prices=prices)

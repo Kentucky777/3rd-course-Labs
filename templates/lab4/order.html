@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная 4{% endblock %}
+
+{% block main %}
+{% if success %}
+    <h1>Заказ сформирован</h1>
+    <div>
+        <p>
+            Заказ успешно сформирован. Вы заказали {{ type }}. 
+            Объём: {{ volume }} м³. 
+            Сумма к оплате: {{ total_price }} руб.
+        </p>
+
+        {% if discount_applied %}
+            <p>
+                Применена скидка 10% за объём более 10 м³. Размер скидки: {{ discount_amount }} руб.
+            </p>
+        {% endif %}
+    </div>
+    <div>
+        <a href="/lab4/order"><button type="button">Оформить новый заказ</button></a>
+    </div>
+{% else %}
+    <h1>Заказ бетона</h1>
+    <h2>Калькулятор и оформление заявки</h2>
+    <form method="post">
+        <div>
+            <label for="type">Марка бетона:</label>
+            <select id="type" name="type">
+                {% for grade, price in prices.items() %}
+                    <option value="{{ grade }}" {% if type == grade %}selected{% endif %}>
+                        {{ grade }} ({{ price }} руб/м³)
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <div>
+            <label for="volume">Объём в м³:</label>
+            <input type="text" id="volume" name="volume" value="{{ volume or '' }}">
+        </div>
+
+        {% if error %}
+            <div style="color: #dc3545; font-weight: bold; font-style: italic; margin: 10px 0;">
+                {{ error }}
+            </div>
+        {% endif %}
+        <br>
+        <div>
+            <button type="submit">Рассчитать и заказать</button>
+            <button type="reset">Сбросить</button>
+        </div>
+    </form>
+{% endif %}
+{% endblock %}
