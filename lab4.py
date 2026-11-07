@@ -199,7 +199,7 @@ def weather():
         result = 'Прохладно'
 
     elif 16 <= temperature <= 25:
-        result = 'Очень холодно'
+        result = 'Тепло'
 
     elif 26 <= temperature <= 30:
         result = 'Жарко'
