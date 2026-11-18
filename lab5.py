@@ -16,27 +16,18 @@ def register():
     login = request.form.get('login')
     password = request.form.get('password')
 
-    if (login and password):
-        conn = psycopg2.connect(
-                    host = '127.0.0.1',
-                    database = 'nikita_baykov_knowledge_base',
-                    user = 'nikita_baykov_knowledge_base',
-                    password = '123'
-                )
-        cur = conn.cursor()
-        
-        cur.execute(f"select login from users where login='{login}';")
-        if cur.fetchone():
-            cur.close()
-            conn.close()
-            return render_template('lab5/register.html', error='Такой пользователь уже существует')
-        cur.execute(f"insert into users (login,password) values ('{login}', '{password}');")
-        conn.commit()
-        cur.close()
-        conn.close()
-        return render_template('lab5/success.html', login=login)
-    else:
-        return render_template('lab5/register.html', error = 'Заполните все поля')
+    if not (login or password):
+        return render_template('lab5/register.html', error='Заполните все поля')
+    
+    conn, cur = db_connect()
+                
+    cur.execute(f"select login from users where login='{login}';")
+    if cur.fetchone():
+        db_close(conn,cur)
+        return render_template('lab5/register.html', error='Такой пользователь уже существует')
+    cur.execute(f"insert into users (login,password) values ('{login}', '{password}');")
+    db_close(conn,cur)
+    return render_template('lab5/success.html', login=login)
 
 
 @lab5.route('/lab5/login', methods = ['GET', 'POST'])
@@ -49,28 +40,36 @@ def login():
     if not (login or password):
         return render_template('lab5/login.html', error = 'Заполните все поля')
 
-    conn = psycopg2.connect(
-        host = '127.0.0.1',
-        database = 'nikita_baykov_knowledge_base',
-        user = 'nikita_baykov_knowledge_base',
-        password = '123'          
-    )
-    cur = conn.cursor(cursor_factory= RealDictCursor)
+    conn, cur = db_connect()
 
     cur.execute(f"select * from users where login ='{login}';")
     user = cur.fetchone()
 
     if not user:
-        cur.close()
-        conn.close()
+        db_close(conn, cur)
         return render_template('lab5/login.html', error='Логин и/или пароль неверны')
 
-    if not user['password'] != password:
-        cur.close()
-        conn.close()
+    if user['password'] != password:
+        db_close(conn, cur)
         return render_template('lab5/login.html', error='Логин и/или пароль неверны')
 
     session['login'] = login
+    db_close(conn, cur)
+    return render_template('lab5/success_login.html', login=login)
+
+
+def db_connect():
+    conn = psycopg2.connect(
+            host = '127.0.0.1',
+            database = 'nikita_baykov_knowledge_base',
+            user = 'nikita_baykov_knowledge_base',
+            password = '123'          
+        )
+    cur = conn.cursor(cursor_factory= RealDictCursor)
+
+    return conn, cur
+
+def db_close(conn, cur):
+    conn.commit()
     cur.close()
     conn.close()
-    return render_template('lab5/success_login.html', login=login)
