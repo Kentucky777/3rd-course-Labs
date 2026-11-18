@@ -22,12 +22,12 @@ def register():
     
     conn, cur = db_connect()
                 
-    cur.execute(f"select login from users where login='{login}';")
+    cur.execute(f"select login from users where login=%s;", (login, ))
     if cur.fetchone():
         db_close(conn,cur)
         return render_template('lab5/register.html', error='Такой пользователь уже существует')
     password_hash = generate_password_hash(password)
-    cur.execute(f"insert into users (login,password) values ('{login}', '{password_hash}');")
+    cur.execute(f"insert into users (login,password) values (%s, %s);", (login, password_hash))
     db_close(conn,cur)
     return render_template('lab5/success.html', login=login)
 
@@ -44,7 +44,7 @@ def login():
 
     conn, cur = db_connect()
 
-    cur.execute(f"select * from users where login ='{login}';")
+    cur.execute(f"select * from users where login = %s;", (login, ))
     user = cur.fetchone()
 
     if not user:
@@ -93,7 +93,25 @@ def create():
     cur.execute("select * from users where login=%s;", (login, ))
     login_id = cur.fetchone()["id"]
 
-    cur.execute(f"insert into articles(user_id, title, article_text) values ({login_id}, '{title}', '{article_text}');")
+    cur.execute(f"insert into articles(user_id, title, article_text) values (%s, %s, %s);", (login_id, title, article_text))
 
     db_close(conn, cur)
     return redirect('/lab5')
+
+
+@lab5.route('/lab5/list')
+def list():
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+
+    conn, cur = db_connect()
+
+    cur.execute(f"select id from users where login=%s;", (login, ))
+    login_id = cur.fetchone()["id"]
+
+    cur.execute(f"select * from articles where user_id = %s;", (login_id, ))
+    articles = cur.fetchall()
+
+    db_close(conn, cur)
+    return render_template('lab5/articles.html', articles=articles)
