@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная 5{% endblock %}
+
+{% block main%}
+    <h1>База знаний</h1>
+    <div style="display:flex; gap: 15px; margin: 15 auto">
+        <button href="/lab5/login" class="btn">Вход</button>
+        <button href="/lab5/register" class="btn">Регистрация</button>
+        <button href="/lab5/list" class="btn">Список статей</button>
+        <button href="/lab5/create" class="btn">Создать статью</button>
+        {{ user }}
+    </div>
+{% endblock %}
