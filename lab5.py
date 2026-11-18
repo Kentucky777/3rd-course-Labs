@@ -88,6 +88,8 @@ def create():
     title = request.form.get('title')
     article_text = request.form.get('article_text')
 
+    if not title or not article_text:
+        return 'Вы не ввели название или текст статьи!'
     conn, cur = db_connect()
 
     cur.execute("select * from users where login=%s;", (login, ))
@@ -112,6 +114,69 @@ def list():
 
     cur.execute(f"select * from articles where user_id = %s;", (login_id, ))
     articles = cur.fetchall()
+    if not articles:
+            return render_template('lab5/articles.html', error = 'Не найдено ни одной статьи!')
 
     db_close(conn, cur)
     return render_template('lab5/articles.html', articles=articles)
+
+
+@lab5.route('/lab5/logout')
+def logout():
+    session.pop('login', None)
+    return redirect('/lab5')
+
+
+@lab5.route('/lab5/edit/<int:article_id>', methods=['GET', 'POST'])
+def edit_article(article_id):
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+
+    conn, cur = db_connect()
+
+    cur.execute("SELECT id FROM users WHERE login=%s;", (login, ))
+    user = cur.fetchone()
+    login_id = user["id"]
+
+    cur.execute("SELECT * FROM articles WHERE id=%s AND user_id=%s;", (article_id, login_id))
+    article = cur.fetchone()
+
+    if not article:
+        db_close(conn, cur)
+        return redirect('/lab5/list')
+
+    if request.method == 'GET':
+        db_close(conn, cur)
+        return render_template('lab5/edit_article.html', article=article)
+
+    title = request.form.get('title')
+    article_text = request.form.get('article_text')
+
+    if not title or not article_text:
+        db_close(conn, cur)
+        return render_template('lab5/edit_article.html', article=article, error='Заполните все поля!')
+
+    cur.execute(
+        "UPDATE articles SET title=%s, article_text=%s WHERE id=%s AND user_id=%s;",
+        (title, article_text, article_id, login_id)
+    )
+
+    db_close(conn, cur)
+
+
+@lab5.route('/lab5/delete/<int:article_id>')
+def delete_article(article_id):
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+
+    conn, cur = db_connect()
+
+    cur.execute("SELECT id FROM users WHERE login=%s;", (login, ))
+    login_id = cur.fetchone()["id"]
+
+    cur.execute("DELETE FROM articles WHERE id=%s AND user_id=%s;", (article_id, login_id))
+
+    db_close(conn, cur)
+    return redirect('/lab5/list')
