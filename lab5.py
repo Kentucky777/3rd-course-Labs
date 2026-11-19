@@ -98,7 +98,7 @@ def create():
     cur.execute("select * from users where login=%s;", (login, ))
     login_id = cur.fetchone()["id"]
 
-    cur.execute(f"insert into articles(user_id, title, article_text, is_favorite, is_public) values (%s, %s, %s, %s, %s);", (login_id, title, article_text, is_favorite, is_public))
+    cur.execute(f"insert into articles(login_id, title, article_text, is_favorite, is_public) values (%s, %s, %s, %s, %s);", (login_id, title, article_text, is_favorite, is_public))
 
     db_close(conn, cur)
     return redirect('/lab5')
@@ -115,7 +115,7 @@ def list():
     cur.execute(f"select id from users where login=%s;", (login, ))
     login_id = cur.fetchone()["id"]
 
-    cur.execute(f"select * from articles where user_id = %s order by is_favorite DESC, id DESC;", (login_id, ))
+    cur.execute(f"select * from articles where login_id = %s order by is_favorite DESC, id DESC;", (login_id, ))
     articles = cur.fetchall()
     if not articles:
             return render_template('lab5/articles.html', error = 'Не найдено ни одной статьи!')
@@ -142,7 +142,7 @@ def edit_article(article_id):
     user = cur.fetchone()
     login_id = user["id"]
 
-    cur.execute("SELECT * FROM articles WHERE id=%s AND user_id=%s;", (article_id, login_id))
+    cur.execute("SELECT * FROM articles WHERE id=%s AND login_id=%s;", (article_id, login_id))
     article = cur.fetchone()
 
     if not article:
@@ -162,7 +162,7 @@ def edit_article(article_id):
         db_close(conn, cur)
         return render_template('lab5/edit_article.html', article=article, error='Заполните все поля!')
 
-    cur.execute("UPDATE articles SET title=%s, article_text=%s, is_favorite=%s, is_public=%s WHERE id=%s AND user_id=%s;",(title, article_text, is_favorite, is_public, article_id, login_id))
+    cur.execute("UPDATE articles SET title=%s, article_text=%s, is_favorite=%s, is_public=%s WHERE id=%s AND login_id=%s;",(title, article_text, is_favorite, is_public, article_id, login_id))
 
     db_close(conn, cur)
     return redirect('/lab5/list')
@@ -179,7 +179,7 @@ def delete_article(article_id):
     cur.execute("SELECT id FROM users WHERE login=%s;", (login, ))
     login_id = cur.fetchone()["id"]
 
-    cur.execute("DELETE FROM articles WHERE id=%s AND user_id=%s;", (article_id, login_id))
+    cur.execute("DELETE FROM articles WHERE id=%s AND login_id=%s;", (article_id, login_id))
 
     db_close(conn, cur)
     return redirect('/lab5/list')
@@ -240,7 +240,7 @@ def public_articles():
     cur.execute("""
         SELECT articles.*, users.login AS author_login, users.real_name AS author_name
         FROM articles
-        JOIN users ON articles.user_id = users.id
+        JOIN users ON articles.login_id = users.id
         WHERE articles.is_public = TRUE
         ORDER BY articles.is_favorite DESC, articles.id DESC;
     """)
