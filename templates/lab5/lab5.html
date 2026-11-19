@@ -5,13 +5,17 @@
 {% block main%}
     <h1>База знаний</h1>
     <div style="display:flex; gap: 15px; margin: 15 auto">
-        <a href="/lab5/login" class="btn"><button>Войти</button></a>
-        <a href="/lab5/register" class="btn"><button>Регистрация</button></a>
-        <a href="/lab5/list" class="btn"><button>Список статей</button></a>
+        <a href="/lab5/list" class="btn"><button>Список моих статей</button></a>
+        <a href="/lab5/public" class="btn"><button>Публичные статьи</button></a>
         <a href="/lab5/create" class="btn"><button>Создать статью</button></a>
-        <a href="/lab5/logout" class="btn"><button>Выйти</button></a>
-        {% if login %}{{ login }}
-        {% else %} Anonymous
+        <a href="/lab5/users" class="btn"><button>Пользователи</button></a>
+        {% if login %}
+            <a href="/lab5/profile" class="btn"><button>Профиль</button></a>
+            <a href="/lab5/logout" class="btn"><button>Выйти</button></a>
+        {% else %}
+            <a href="/lab5/login" class="btn"><button>Войти</button></a>
+            <a href="/lab5/register" class="btn"><button>Регистрация</button></a>
         {% endif %}
+        <span>{{ login or 'Anonymous' }}</span>
     </div>
 {% endblock %}
